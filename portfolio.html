@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="signature">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH_OS // System Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <link id="favicon" rel="icon" type="image/svg+xml">
+
+    <style>
+        :root,
+        [data-theme="signature"] {
+            --bg-primary: #0B0B10;
+            --bg-secondary: #141422;
+            --surface-card: #1E1B2E;
+            --surface-highlight: #C9A7FF;
+            --color-primary: #7A2CFF;
+            --color-accent: #FF2BD6;
+            --text-main: #F2F3FF;
+            --text-muted: #B8B6CC;
+            --grad-beam: linear-gradient(45deg, var(--color-accent), var(--color-primary));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 15px rgba(201, 167, 255, 0.3);
+            --border: rgba(122, 44, 255, 0.2);
+        }
+
+        [data-theme="volt"] {
+            --bg-primary: #0B0B10;
+            --bg-secondary: #141422;
+            --surface-card: #1E1B2E;
+            --surface-highlight: #D4F591;
+            --color-primary: #B5E853;
+            --color-accent: #2BD6FF;
+            --text-main: #F2F3FF;
+            --text-muted: #B8B6CC;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(181, 232, 83, 0.25);
+            --border: rgba(181, 232, 83, 0.2);
+        }
+
+        [data-theme="crimson"] {
+            --bg-primary: #0F0505;
+            --bg-secondary: #1A0A0A;
+            --surface-card: #261111;
+            --surface-highlight: #FF8A8A;
+            --color-primary: #FF3E3E;
+            --color-accent: #FF9E2B;
+            --text-main: #FFF2F2;
+            --text-muted: #CCB6B6;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(255, 62, 62, 0.25);
+            --border: rgba(255, 62, 62, 0.2);
+        }
+
+        [data-theme="deepsea"] {
+            --bg-primary: #050A0F;
+            --bg-secondary: #0A141A;
+            --surface-card: #111B26;
+            --surface-highlight: #8AB4FF;
+            --color-primary: #3085FF;
+            --color-accent: #2BD6FF;
+            --text-main: #F2F7FF;
+            --text-muted: #B6C2CC;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(48, 133, 255, 0.25);
+            --border: rgba(48, 133, 255, 0.2);
+        }
+
+        [data-theme="mono"] {
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1A1A;
+            --surface-card: #242424;
+            --surface-highlight: #FFFFFF;
+            --color-primary: #F2F3FF;
+            --color-accent: #888888;
+            --text-main: #F2F3FF;
+            --text-muted: #777777;
+            --grad-beam: linear-gradient(135deg, #FFFFFF, #444444);
+            --grad-night: linear-gradient(180deg, #0D0D0D, #1A1A1A);
+            --shadow-glow: 0 0 15px rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="moon"] {
+            --bg-primary: #121417;
+            --bg-secondary: #1C1F24;
+            --surface-card: #262B32;
+            --surface-highlight: #D1D9E6;
+            --color-primary: #A3B1C6;
+            --color-accent: #6D7888;
+            --text-main: #E0E6ED;
+            --text-muted: #8E9AAF;
+            --grad-beam: linear-gradient(135deg, #A3B1C6, #6D7888);
+            --grad-night: linear-gradient(180deg, #121417, #1C1F24);
+            --shadow-glow: 0 0 15px rgba(163, 177, 198, 0.2);
+            --border: rgba(163, 177, 198, 0.15);
+        }
+
+        [data-theme="emerald-forge"] {
+            --bg-primary: #080B08;
+            --bg-secondary: #0F140F;
+            --surface-card: #161F16;
+            --surface-highlight: #85FFB5;
+            --color-primary: #00FF85;
+            --color-accent: #00A356;
+            --text-main: #F2FFF7;
+            --text-muted: #B6CCBD;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(0, 255, 133, 0.2);
+            --border: rgba(0, 255, 133, 0.15);
+        }
+
+        [data-theme="solar"] {
+            --bg-primary: #0D0B05;
+            --bg-secondary: #17140A;
+            --surface-card: #241F11;
+            --surface-highlight: #FFD985;
+            --color-primary: #FFB800;
+            --color-accent: #FF5C00;
+            --text-main: #FFFBF2;
+            --text-muted: #CCC2B6;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(255, 184, 0, 0.2);
+            --border: rgba(255, 184, 0, 0.15);
+        }
+
+        [data-theme="cyber-pulse"] {
+            --bg-primary: #0B0510;
+            --bg-secondary: #140A1A;
+            --surface-card: #1F1126;
+            --surface-highlight: #FF85F7;
+            --color-primary: #FF00E5;
+            --color-accent: #00D1FF;
+            --text-main: #FFF2FF;
+            --text-muted: #C7B6CC;
+            --grad-beam: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --grad-night: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            --shadow-glow: 0 0 20px rgba(255, 0, 229, 0.2);
+            --border: rgba(255, 0, 229, 0.15);
+        }
+
+        [data-theme="titanium"] {
+            --bg-primary: #1B1B1E;
+            --bg-secondary: #252529;
+            --surface-card: #2F2F35;
+            --surface-highlight: #C0C0C8;
+            --color-primary: #9494A1;
+            --color-accent: #E2E2E8;
+            --text-main: #FFFFFF;
+            --text-muted: #A1A1AA;
+            --grad-beam: linear-gradient(135deg, #9494A1, #E2E2E8);
+            --grad-night: linear-gradient(180deg, #1B1B1E, #252529);
+            --shadow-glow: 0 0 15px rgba(148, 148, 161, 0.2);
+            --border: rgba(148, 148, 161, 0.2);
+        }
+
+        [data-theme="nebula"] {
+            --bg-primary: #090716;
+            --bg-secondary: #110E26;
+            --surface-card: #1A1635;
+            --surface-highlight: #C9A7FF;
+            --color-primary: #6E56CF;
+            --color-accent: #B19DFF;
+            --text-main: #F5F3FF;
+            --text-muted: #B8B3CC;
+            --grad-beam: linear-gradient(135deg, #6E56CF, #B19DFF);
+            --grad-night: linear-gradient(180deg, #090716, #110E26);
+            --shadow-glow: 0 0 20px rgba(110, 86, 207, 0.25);
+            --border: rgba(110, 86, 207, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(122, 44, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 43, 214, 0.05) 0%, transparent 50%);
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.12;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+        }
+
+        .deck-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr 360px;
+            grid-template-rows: 70px 1fr 60px;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .top-readout {
+            grid-column: 1 / -1;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            background: rgba(11, 11, 16, 0.85);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+        }
+
+        .sys-identity {
+            font-family: 'JetBrains Mono';
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .sys-identity span {
+            color: var(--color-primary);
+            font-weight: 800;
+            text-shadow: var(--shadow-glow);
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-aside {
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            background: rgba(20, 20, 34, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .launch-path {
+            position: absolute;
+            left: 3rem;
+            bottom: 0;
+            top: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 1;
+        }
+
+        .active-path-fill {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--grad-beam);
+            box-shadow: 0 0 15px var(--color-primary);
+            transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .rocket-tracker {
+            position: absolute;
+            left: 3rem;
+            bottom: 0;
+            transform: translate(-50%, 0);
+            z-index: 10;
+            transition: bottom 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+            color: var(--color-primary);
+            filter: drop-shadow(var(--shadow-glow));
+            opacity: 0;
+        }
+
+        .nav-milestone {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
+            transition: 0.3s;
+        }
+
+        .milestone-icon {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.4s;
+            z-index: 15;
+        }
+
+        .nav-milestone.active .milestone-icon {
+            border-color: var(--color-primary);
+            color: #fff;
+            background: var(--color-primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.1);
+        }
+
+        .milestone-info {
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .nav-milestone.active .milestone-info {
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .mission-display {
+            padding: 2.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at center, rgba(30, 27, 46, 0.1) 0%, transparent 80%);
+            scrollbar-width: none;
+        }
+
+        .mission-display::-webkit-scrollbar {
+            display: none;
+        }
+
+        .console-container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            animation: consoleEnter 0.5s ease-out;
+        }
+
+        @keyframes consoleEnter {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-banner {
+            border-left: 4px solid var(--color-primary);
+            padding-left: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-banner h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-banner p {
+            font-family: 'JetBrains Mono';
+            color: var(--color-accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--grad-beam);
+            opacity: 0.5;
+        }
+
+        .section-title {
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .p-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .p-text b {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .project-item {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .project-item:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .project-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .project-item p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono';
+            font-size: 0.55rem;
+            padding: 3px 8px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .widget-aside {
+            border-left: 1px solid var(--border);
+            background: rgba(11, 11, 16, 0.6);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 1.2rem 0;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            background: var(--border);
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .widget-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            scrollbar-width: none;
+        }
+
+        .widget-pane {
+            display: none;
+        }
+
+        .widget-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .widget-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .widget-title {
+            font-size: 0.55rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .stat-row span:last-child {
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .skill-bar {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 100%;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .skill-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--color-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .terminal-container {
+            background: #050508;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .terminal-output {
+            flex: 1;
+            padding: 1rem;
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--color-primary);
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border);
+        }
+
+        .terminal-prompt {
+            color: var(--color-accent);
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            margin-right: 8px;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+        }
+
+        .deck-dashboard {
+            grid-column: 1 / -1;
+            border-top: 1px solid var(--border);
+            background: rgba(11, 11, 16, 0.9);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            z-index: 100;
+        }
+
+        .breadcrumbs {
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumbs span {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        #theme-swapper {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--color-primary);
+            font-size: 0.6rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            outline: none;
+            font-family: 'JetBrains Mono';
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--color-primary);
+            border: none;
+            color: white;
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .philosophy-quote {
+            font-style: italic;
+            border-left: 2px solid var(--color-accent);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanlines" id="scanLayer"></div>
+
+    <div class="deck-grid">
+        <header class="top-readout">
+            <div class="sys-identity">GLITCH_CORE // ARCH_LOG: <span>BERITH_JESHURUN</span></div>
+            <div
+                style="font-family: 'JetBrains Mono'; font-size: 0.65rem; color: var(--text-muted); display: flex; gap: 20px;">
+                <div id="uptime">UPTIME: 00:00:00</div>
+                <div>SIGNAL: <span style="color: var(--color-primary)">ENCRYPTED</span></div>
+            </div>
+        </header>
+
+        <aside class="timeline-aside">
+            <div class="launch-path">
+                <div class="active-path-fill" id="pathFill"></div>
+            </div>
+            <div class="rocket-tracker" id="rocketTracker">
+                <i data-lucide="chevrons-up" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div id="nav-list" style="display: flex; flex-direction: column-reverse; width: 100%;">
+                <!-- Nav items generated via JS -->
+            </div>
+        </aside>
+
+        <!-- MAIN CONSOLE (Center) -->
+        <main class="mission-display">
+            <div id="mission-console" class="console-container">
+                <!-- Content generated via JS -->
+            </div>
+        </main>
+
+        <!-- WIDGET PANEL (Right) -->
+        <aside class="widget-aside">
+            <div class="widget-tabs">
+                <button class="tab-btn active" onclick="switchWidget('telemetry')">SENSORS</button>
+                <button class="tab-btn" onclick="switchWidget('matrix')">MATRIX</button>
+                <button class="tab-btn" onclick="switchWidget('terminal')">CLI</button>
+            </div>
+
+            <div class="widget-content">
+                <div class="widget-pane active" id="telemetry-pane">
+                    <div class="widget-box">
+                        <div class="widget-title">Engine_Diagnostics</div>
+                        <div class="stat-row"><span>HYBRID_CORE</span><span>STABLE</span></div>
+                        <div class="stat-row"><span>SYNC_LATENCY</span><span>0.4ms</span></div>
+                        <div class="stat-row"><span>PROCESS_LOAD</span><span id="loadVal">12%</span></div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-title">UI_Settings</div>
+                        <div class="stat-row"><span>SCANLINES</span><span id="scanStatus">ACTIVE</span></div>
+                        <div class="stat-row"><span>SFX_NODES</span><span id="sfxStatus">ENABLED</span></div>
+                        <button onclick="toggleScanlines()"
+                            style="width:100%; padding: 5px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: 'JetBrains Mono'; font-size: 0.5rem; margin-top: 10px;">TOGGLE_SCAN_ARRAY</button>
+                    </div>
+                </div>
+
+                <div class="widget-pane" id="matrix-pane">
+                    <div class="widget-box">
+                        <div class="widget-title">Core_Logic</div>
+                        <div class="stat-row"><span>PYTHON</span><span>99%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 99%"></div>
+                        </div>
+                        <div class="stat-row"><span>JS / TS</span><span>92%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 92%"></div>
+                        </div>
+                        <div class="stat-row"><span>C++ (EMBEDDED)</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-title">Framework_Nodes</div>
+                        <div class="stat-row"><span>PYSIDE6 / QT</span><span>95%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 95%"></div>
+                        </div>
+                        <div class="stat-row"><span>FLASK / BACKEND</span><span>88%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-pane" id="terminal-pane">
+                    <div class="terminal-container">
+                        <div class="terminal-output" id="termOutput">// BJ_OS v4.2 BOOT_SUCCESS...</div>
+                        <div class="terminal-input-line">
+                            <span class="terminal-prompt">></span>
+                            <input type="text" id="termInput" class="terminal-input" spellcheck="false"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <footer class="deck-dashboard">
+            <div class="breadcrumbs">
+                SYSTEM // <span id="bread-section">STATION</span>
+            </div>
+            <div class="breadcrumbs">
+                <p>Use Arrow Keys to Navigate or Use Interactive Timeline Viewer at the left pane</p>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <select id="theme-swapper" title="theme-swapper">
+                    <option value="signature">SIGNATURE.SYS</option>
+                    <option value="volt">VOLT_CYBER.SKN</option>
+                    <option value="crimson">CRIMSON_PROT.SKN</option>
+                    <option value="deepsea">DEEPSEA.SKN</option>
+                    <option value="mono">MONO.SYS</option>
+                    <option value="moon">MOON.SKN</option>
+                    <option value="emerald-forge">EMERALD_FORGE.SYS</option>
+                    <option value="solar">SOLAR.SKN</option>
+                    <option value="cyber-pulse">CYBER_PULSE.SYS</option>
+                    <option value="titanium">TITANIUM.SKN</option>
+                    <option value="nebula">NEBULA.SYS</option>
+                </select>
+                <div id="clock" style="font-family: 'JetBrains Mono'; font-size: 0.65rem; color: var(--text-muted);">
+                    00:00:00</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const audio = {
+            click: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'], volume: 0.1 }),
+            switch: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2579/2579-preview.mp3'], volume: 0.15 }),
+            type: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2562/2562-preview.mp3'], volume: 0.05 })
+        };
+
+        const navSections = [
+            { id: 'hero', name: 'Identity', icon: 'zap', label: 'MOD_01', c: 0 },
+            { id: 'about', name: 'Systems / OBJECTIVE', icon: 'settings', label: 'MOD_02', c: 1 },
+            { id: 'stack', name: 'Tech Stack / SKILLS', icon: 'cpu', label: 'MOD_03', c: 2 },
+            { id: 'projects', name: 'Featured Work / PROJECTS', icon: 'layers', label: 'MOD_04', c: 3 },
+            { id: 'philosophy', name: 'Logic / PHILOSOPHY', icon: 'book-open', label: 'MOD_05', c: 4 },
+            { id: 'contact', name: 'Signal / ABOUT', icon: 'message-square', label: 'MOD_06', c: 5 }
+        ];
+        async function getData() {
+            const response = await fetch("data/projects.json");
+            const data = await response.json();
+
+            const wrapper = document.createElement("div");
+            wrapper.style.cursor = "pointer";
+
+            const title = document.createElement("div");
+            title.className = "section-title";
+            title.innerText = "MISSION_PORTFOLIO";
+
+            const grid = document.createElement("div");
+            grid.className = "project-grid";
+
+            function createProjectItem(p) {
+                const item = document.createElement("div");
+                item.className = "project-item";
+
+                item.addEventListener("click", ()=> {
+                    localStorage.setItem("glitchos-redirect:projects", p.id);
+                    window.location.href = "https://berithjeshurun13.github.io/projects.html";
+                })
+
+                const h3 = document.createElement("h3");
+                h3.innerText = p.name;
+
+                const desc = document.createElement("p");
+                desc.innerText = p.desc;
+
+                const tags = document.createElement("div");
+                tags.className = "tag-row";
+
+                p.deps.forEach(t => {
+                    const span = document.createElement("span");
+                    span.className = "tag";
+                    span.innerText = t;
+                    tags.appendChild(span);
+                });
+
+                item.append(h3, desc, tags);
+                return item;
+            }
+            data.forEach(p => grid.appendChild(createProjectItem(p)));
+            wrapper.append(title, grid);
+            return wrapper;
+        }
+        var PJX = getData();
+
+        const contentData = {
+            hero: `
+                <div class="hero-banner">
+                    <h1>Berith Jeshurun</h1>
+                    <p>Mechanical Engineer | Systems-Focused Developer | Hybrid Application Engineer</p>
+                </div>
+                <div class="content-card">
+                    <p class="p-text">I build structured, production-oriented software systems with a focus on <b>backend architecture</b>, <b>multimodal data processing</b>, and <b>high-fidelity desktop applications</b>.</p>
+                    <div style="display:flex; gap: 15px; margin-top: 2rem;">
+                        <button class="btn-action" onclick="navigateTo('projects')">VIEW_PROJECTS</button>
+                        <a href="https://github.com/berithjeshurun/" class="btn-action btn-outline">GITHUB</a>
+                    </div>
+                </div>
+            `,
+            about: `
+                <div class="section-title">CORE_BACKGROUND</div>
+                <div class="content-card">
+                    <p class="p-text">Iam a <b>B.Tech Mechanical Engineering</b> Graduate at B.V. Raju Institute of Technology, with a strong inclination toward software architecture and systems design.</p>
+                    <p class="p-text">While my academic roots are in mechanical systems and i do stuff like simulations, my primary focus lies in the digital counterparts: <b>Backend system design</b>, <b>offline-first architectures</b>, and <b>hybrid desktop applications</b>. I enjoy building the engines that drive complexity.</p>
+                </div>
+            `,
+            stack: `
+                <div class="section-title">ENGINEERING_FOCUS</div>
+                <div class="project-grid">
+                    <div class="project-item">
+                        <h3>Languages</h3>
+                        <div class="tag-row">
+                            <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">C & C++(Arduino)</span><span class="tag">HTML5/CSS3</span><span class="tag">JAVA (Basics)</span><span class="tag">KOTLIN (Basics)</span><span class="tag">Perl (Text-Processing) [Strawberry Perl]</span><span class="tag">Ruby (Basic Fluency)</span><span class="tag">GDScript</span>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <h3>Tools & Libs</h3>
+                        <div class="tag-row">
+                            <span class="tag">PySide6 (Qt)</span><span class="tag">Flask</span><span class="tag">FastAPI</span><span class="tag">NLTK</span><span class="tag">scikit-learn</span><span class="tag">NumPy</span><span class="tag">GSAP</span><span class="tag">Git</span><span class="tag">ollama</span><span class="tag">Blender</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card" style="margin-top: 1.5rem;">
+                    <div class="section-title" style="font-size: 0.55rem;">SPECIALIZATIONS</div>
+                    <ul style="list-style: none; font-size: 0.8rem; color: var(--text-muted); line-height: 2;">
+                        <li>• Modular Architecture Design</li>
+                        <li>• Game design with GoDot</li>
+                        <li>• Python-JavaScript Bridge Systems (QtWebEngine)</li>
+                        <li>• Search & Indexing Pipelines</li>
+                        <li>• Invariant-Driven Development</li>
+                        <li>• Prefer writing from scratch but also okay with using exsisting frameworks if the work/project demands</li>
+
+                    </ul>
+                </div>
+            `,
+            projects: PJX,
+            philosophy: `
+                <div class="section-title">SYSTEM_IDEOLOGY</div>
+                <div class="content-card">
+                    <p class="p-text">"I believe code is a conversation between you and your machine—a series of agrees and disagrees."</p>
+                    <div class="philosophy-quote">
+                        A system without boundaries will eventually eat its own structure.
+                    </div>
+                    <p class="p-text">I aim to design systems that scale in <b>clarity</b> before they scale in <b>size</b>. Minimalist at the core, robust at the boundary.</p>
+                </div>
+            `,
+            contact: `
+                <div class="section-title">SIGNAL_ESTABLISHMENT</div>
+                <div class="content-card">
+                    <p class="p-text">Currently seeking collaborations/Work</p>
+                    <div style="margin-top: 2rem;">
+                        <div class="stat-row" style="margin-bottom: 1.5rem;"><span>EMAIL</span><span><a href="mailto:berithjeshurun13@gmail.com">berithjeshurun13@gmail.com</a></span></div>
+                        <div class="stat-row"><span>LOCATION</span><span>HYD, INDIA</span></div>
+                    </div>
+                </div>
+            `
+        };
+        let currentSection = 'hero';
+        let sfxEnabled = true;
+
+        function updateFavicon() {
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
+
+            const svgString = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="${primaryColor}" stroke-width="8" stroke-linejoin="round"/>
+                    <path d="M35 35 L65 35 L65 50 L35 50 L65 50 L65 65 L35 65" fill="none" stroke="${primaryColor}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="50" cy="50" r="10" fill="${accentColor}" opacity="0.6"/>
+                </svg>
+            `;
+
+            const encodedSvg = btoa(svgString);
+            document.getElementById('favicon').setAttribute('href', `data:image/svg+xml;base64,${encodedSvg}`);
+        }
+
+        async function initNav() {
+            const list = document.getElementById('nav-list');
+            list.innerHTML = navSections.map((s, idx) => `
+        <div class="nav-milestone" id="nav-${s.id}" onclick="navigateTo('${s.id}')">
+            <div class="milestone-icon"><i data-lucide="${s.icon}"></i></div>
+            <div class="milestone-info">
+                <div style="font-size: 0.45rem; opacity: 0.5;">${s.label}</div>
+                <div>${s.name}</div>
+            </div>
+        </div>
+    `).join('');
+
+            const PJX = await getData();
+            contentData.projects = PJX;
+
+            navigateToTheme(localStorage.getItem('glitchos.theme'));
+            lucide.createIcons();
+            navigateTo('hero');
+            updateFavicon();
+
+            if ("glitchos-redirect:portfolio" in localStorage) {
+                navigateTo(localStorage.getItem("glitchos-redirect:portfolio"));
+                localStorage.removeItem("glitchos-redirect:portfolio");
+            }
+        }
+
+        function navigateTo(id) {
+            if (sfxEnabled) audio.switch.play();
+            currentSection = id;
+
+            document.querySelectorAll('.nav-milestone').forEach(m => m.classList.remove('active'));
+            document.getElementById(`nav-${id}`).classList.add('active');
+            document.getElementById('bread-section').innerText = id.toUpperCase();
+
+            const consoleEl = document.getElementById('mission-console');
+            consoleEl.innerHTML = "";
+
+            const content = contentData[id];
+
+            if (content instanceof HTMLElement) {
+                consoleEl.appendChild(content);
+            } else {
+                consoleEl.innerHTML = content;
+            }
+        }
+
+        function switchWidget(pane) {
+            if (sfxEnabled) audio.click.play();
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.widget-pane').forEach(p => p.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`${pane}-pane`).classList.add('active');
+            if (pane === 'terminal') document.getElementById('termInput').focus();
+        }
+
+        const termInput = document.getElementById('termInput');
+        const termOutput = document.getElementById('termOutput');
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = termInput.value.trim().toLowerCase();
+                termInput.value = '';
+                processCommand(cmd);
+            } else if (sfxEnabled) audio.type.play();
+        });
+
+        function processCommand(cmd) {
+            const line = document.createElement('div');
+            line.innerHTML = `<span style="color:var(--color-accent)">></span> ${cmd}`;
+            termOutput.appendChild(line);
+
+            let response = "";
+            switch (cmd) {
+                case 'help': response = "ls, status, about, clear, theme [name]"; break;
+                case 'ls': response = "MODULES: IDENTITY, SYSTEMS, PROJECTS, LOGIC"; break;
+                case 'status': response = "ALL_SYSTEMS_NOMINAL // HULL: 100%"; break;
+                case 'about': response = "BERITH JESHURUN // HYBRID_SYSTEMS_ENG"; break;
+                case 'clear': termOutput.innerHTML = ""; return;
+                case 'theme signature': navigateToTheme('signature'); response = "SKIN_SWAP: SUCCESS"; break;
+                case 'theme volt': navigateToTheme('volt'); response = "SKIN_SWAP: SUCCESS"; break;
+                case 'theme crimson': navigateToTheme('crimson'); response = "SKIN_SWAP: SUCCESS"; break;
+                case 'theme mono': navigateToTheme('mono'); response = "SKIN_SWAP: SUCCESS"; break;
+                default:
+                    if (cmd.startsWith('theme ')) {
+                        const t = cmd.split(' ')[1];
+                        navigateToTheme(t);
+                        response = `SKIN_SWAP: ${t.toUpperCase()}`;
+                    } else {
+                        response = "CMD_NOT_RECOGNIZED. TYPE 'HELP'";
+                    }
+            }
+
+            const respLine = document.createElement('div');
+            respLine.style.opacity = "0.7";
+            respLine.innerText = `// ${response}`;
+            termOutput.appendChild(respLine);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        function navigateToTheme(name) {
+            localStorage.setItem("glitchos.theme", name);
+            document.documentElement.setAttribute('data-theme', name);
+            document.getElementById('theme-swapper').value = name;
+            requestAnimationFrame(updateFavicon);
+        }
+
+        function toggleScanlines() {
+            const scan = document.getElementById('scanLayer');
+            const status = document.getElementById('scanStatus');
+            if (scan.style.display === 'none') {
+                scan.style.display = 'block';
+                status.innerText = "ACTIVE";
+            } else {
+                scan.style.display = 'none';
+                status.innerText = "OFFLINE";
+            }
+        }
+
+        let startTime = Date.now();
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+            let diff = Math.floor((Date.now() - startTime) / 1000);
+            let h = Math.floor(diff / 3600).toString().padStart(2, '0');
+            let m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+            let s = (diff % 60).toString().padStart(2, '0');
+            document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
+
+            document.getElementById('loadVal').innerText = (10 + Math.floor(Math.random() * 8)) + "%";
+        }, 1000);
+
+        document.getElementById('theme-swapper').addEventListener('change', (e) => {
+            navigateToTheme(e.target.value);
+            if (sfxEnabled) audio.click.play();
+        });
+
+        window.onload = initNav;
+
+        function navArr(mode) {
+            for (let index = 0; index < navSections.length; index++) {
+                const element = navSections[index];
+                if (element.id == currentSection) {
+                    if (mode == "up") {
+                        navigateTo(navSections[index + 1].id);
+                        break;
+                    } else {
+                        navigateTo(navSections[index - 1].id);
+
+                    }
+                }
+            }
+        }
+        document.addEventListener("keyup", (e) => {
+            if (e.key == 'ArrowUp') {
+                navArr("up");
+            } else if (e.key == "ArrowDown") {
+                navArr("down")
+            }
+        })
+    </script>
+</body>
+
+</html>

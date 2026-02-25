@@ -1,0 +1,35 @@
+ex {
+    background-color: #333;
+    color: inherit;
+    font-family: monospace;
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.3rem;
+}
+
+strong {
+    font-weight: 600;
+}
+
+li {
+    margin-bottom: 1%;
+}
+
+gr {
+    color: #00BFFF;
+    background-color: inherit;
+    font-family: monospace;
+    font-style: italic;
+}
+
+cap {
+    color: rgb(205, 67, 67);
+    background-color: inherit;
+    font-style: oblique;
+}
+
+bold {
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: bolder;
+}

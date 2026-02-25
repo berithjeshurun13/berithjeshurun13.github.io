@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berith Jeshurun</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link id="favicon" rel="icon" type="image/svg+xml">
+    <style>
+        :root {
+            --bg-primary: #0B0B10;
+            --bg-secondary: #141422;
+            --surface: #1E1B2E;
+            --primary: #7A2CFF;
+            --accent: #FF2BD6;
+            --text-main: #F2F3FF;
+            --text-muted: #B8B6CC;
+            --border: rgba(122, 44, 255, 0.15);
+            --grad-beam: linear-gradient(45deg, var(--accent), var(--primary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(122, 44, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(255, 43, 214, 0.03) 0%, transparent 50%);
+        }
+
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .label {
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .hero {
+            border-left: 2px solid var(--primary);
+            padding-left: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 650px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-meta {
+            font-family: 'JetBrains Mono';
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            background: rgba(122, 44, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category h4 {
+            font-family: 'JetBrains Mono';
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .skill-item span:last-child {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .contact-footer {
+            margin-top: 8rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .contact-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-right: 2rem;
+            font-family: 'JetBrains Mono';
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .contact-links a:hover {
+            color: var(--primary);
+        }
+
+        .philosophy-block {
+            border-left: 3px solid var(--accent);
+            padding-left: 2rem;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin: 4rem 0;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        <section class="hero">
+            <span class="label">System_Identity // v4.2</span>
+            <h1>Berith Jeshurun</h1>
+            <p>
+                Mechanical Engineer specialized in <b>Hybrid Software Architecture</b>.
+                I design modular engines and high-fidelity desktop ecosystems that prioritize structure and reliability.
+            </p>
+        </section>
+
+        <section>
+            <h2><i data-lucide="user"></i> Briefing</h2>
+            <p class="bio-p" style="max-width: 750px; color: var(--text-muted);">
+                Currently final year at B.V. Raju Institute of Technology, my engineering philosophy is rooted in
+                the belief that <b>code is a physical structure</b>. I apply mechanical constraints—safety,
+                invariants, and efficiency—to software systems. My focus lies in <b>offline-first architectures</b>
+                and building the backend engines that power multimodal research tools.
+            </p>
+        </section>
+
+        <section>
+            <h2><i data-lucide="cpu"></i> Engineering_Matrix</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h4>CORE_LOGIC</h4>
+                    <div class="skill-item"><span>Python (Backend)</span><span>99%</span></div>
+                    <div class="skill-item"><span>JavaScript / TS</span><span>92%</span></div>
+                    <div class="skill-item"><span>C++ (Embedded)</span><span>50%</span></div>
+                    <div class="skill-item"><span>SQL / Indexing</span><span>67%</span></div>
+                </div>
+                <div class="skill-category">
+                    <h4>FRAMEWORKS</h4>
+                    <div class="skill-item"><span>PySide6 / Qt</span><span>95%</span></div>
+                    <div class="skill-item"><span>Flask / REST</span><span>93%</span></div>
+                    <div class="skill-item"><span>NumPy / Data</span><span>82%</span></div>
+                    <div class="skill-item"><span>fastAPI / ASYNC</span><span>80%</span></div>
+                    <div class="skill-item"><span>Git / CI-CD</span><span>90%</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i data-lucide="layers"></i> Mission_Logs</h2>
+            <div class="data-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">LightHouse</div>
+                        <div class="card-meta">UI_SYSTEMS</div>
+                    </div>
+                    <p class="card-desc">
+                        A flagship hybrid desktop research workstation built for Bibilical analysis. Built using Python and QtWebEngine, it bridges
+                        low-level multithreading with flexible, web-style component rendering.
+                    </p>
+                    <div class="tag-group">
+                        <span class="tag">PySide6</span>
+                        <span class="tag">QtWebEngine</span>
+                        <span class="tag">Offline-First</span>
+                        <span class="tag">Multithreading</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">PySeed</div>
+                        <div class="card-meta">DATA_INFRA</div>
+                    </div>
+                    <p class="card-desc">
+                        A multimodal tensor engine designed for strict type and layout enforcement across image, audio,
+                        and spatial data.
+                    </p>
+                    <div class="tag-group">
+                        <span class="tag">Python</span>
+                        <span class="tag">Tensors</span>
+                        <span class="tag">Data Architecture</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Insight.ai</div>
+                        <div class="card-meta">PROTOTYPE</div>
+                    </div>
+                    <p class="card-desc">
+                        Initial prototype for high-latency data processing. Evolved into the hybrid logic core currently
+                        used in the LightHouse ecosystem.
+                    </p>
+                    <div class="tag-group">
+                        <span class="tag">Flask</span>
+                        <span class="tag">Asynchronous IO</span>
+                        <span class="tag">NLP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="philosophy-block">
+                "A system without boundaries eventually eats its own structure. I aim to design systems that scale in
+                <b>clarity</b> before they scale in size."
+            </div>
+        </section>
+
+        <footer class="contact-footer">
+            <div class="contact-links">
+                <a href="mailto:berithjeshurun13@gmail.com">EMAIL</a>
+                <a href="#">GITHUB</a>
+            </div>
+            <div class="mono" style="font-size: 0.65rem; opacity: 0.4;">
+                GLITCH_ARCHIVE_NODE // 2026
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function updateFavicon() {
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+
+            const svgString = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="${primaryColor}" stroke-width="8" stroke-linejoin="round"/>
+                    <path d="M35 35 L65 35 L65 50 L35 50 L65 50 L65 65 L35 65" fill="none" stroke="${primaryColor}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="50" cy="50" r="10" fill="${accentColor}" opacity="0.6"/>
+                </svg>
+            `;
+
+            const encodedSvg = btoa(svgString);
+            document.getElementById('favicon').setAttribute('href', `data:image/svg+xml;base64,${encodedSvg}`);
+        }
+    </script>
+</body>
+
+</html>

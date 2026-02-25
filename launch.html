@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="signature">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH_OS // Base Station</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        :root,
+        [data-theme="signature"] {
+            --primary: #7A2CFF;
+            --accent: #FF2BD6;
+            --glow: rgba(122, 44, 255, 0.4);
+            --bg: #030305;
+            --surface: rgba(10, 10, 15, 0.8);
+            --text: #F2F3FF;
+            --text-dim: #5E5E75;
+            --border: rgba(122, 44, 255, 0.25);
+        }
+
+        [data-theme="volt"] {
+            --primary: #B5E853;
+            --accent: #2BD6FF;
+            --glow: rgba(181, 232, 83, 0.4);
+            --bg: #030503;
+            --surface: rgba(10, 15, 10, 0.8);
+            --text: #F2F3FF;
+            --text-dim: #5E755E;
+            --border: rgba(181, 232, 83, 0.25);
+        }
+
+        [data-theme="crimson"] {
+            --primary: #FF3E3E;
+            --accent: #FF9E2B;
+            --glow: rgba(255, 62, 62, 0.4);
+            --bg: #050202;
+            --surface: rgba(15, 10, 10, 0.8);
+            --text: #FFF2F2;
+            --text-dim: #755E5E;
+            --border: rgba(255, 62, 62, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.3;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.1;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        .base-station-hud {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            height: 85vh;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease;
+        }
+
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--primary);
+            z-index: 11;
+        }
+
+        .tl {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .tr {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .bl {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .br {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .hud-header {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .identity-block h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--glow);
+        }
+
+        .identity-block p {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+
+        .system-readout {
+            text-align: right;
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .system-readout span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .terminal-core {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            padding: 3rem;
+            gap: 4rem;
+            overflow: hidden;
+        }
+
+        .status-feed {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .status-feed h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -3px;
+            margin-bottom: 1rem;
+        }
+
+        .status-feed .divider {
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            margin-bottom: 2rem;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .diagnostic-log {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            height: 150px;
+            line-height: 1.8;
+        }
+
+        .diagnostic-log .line {
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .diagnostic-log .line.success {
+            color: var(--primary);
+        }
+
+        .ignition-module {
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .ignition-module::before {
+            content: "AUTH_REQUIRED";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: 'JetBrains Mono';
+            font-size: 0.5rem;
+            color: var(--text-dim);
+        }
+
+        .auth-check {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono';
+            margin-top: 1rem;
+        }
+
+        .auth-check li {
+            list-style: none;
+            margin-bottom: 10px;
+            color: var(--text-dim);
+        }
+
+        .auth-check li.valid {
+            color: var(--text);
+        }
+
+        .auth-check li.valid i {
+            color: var(--primary);
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .ignition-btn {
+            height: 100px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Inter';
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 12px;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ignition-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 50px var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .ignition-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        .hud-footer {
+            height: 60px;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .theme-swapper select {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 0.65rem;
+            padding: 3px 10px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .mission-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .mission-loader.active {
+            display: flex;
+        }
+
+        .loader-content {
+            width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .loader-progress-container {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--glow);
+            transition: width 0.3s ease;
+        }
+
+        .loader-phase {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 10px;
+        }
+
+        .loader-velocity {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-top: 1rem;
+            font-family: 'Inter';
+        }
+
+        .star-warp {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .warp-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            height: 1px;
+            width: 1px;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(-2px, 2px);
+            }
+
+            50% {
+                transform: translate(2px, -2px);
+            }
+
+            75% {
+                transform: translate(-2px, -2px);
+            }
+        }
+
+        .vibrate {
+            animation: shake 0.1s infinite;
+        }
+
+        .glitch-text {
+            animation: glitch 4s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            90%,
+            100% {
+                transform: skew(0);
+            }
+
+            91% {
+                transform: skew(10deg);
+                filter: blur(1px);
+            }
+
+            93% {
+                transform: skew(-10deg);
+            }
+
+            95% {
+                transform: skew(0);
+                filter: blur(0);
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+
+    <div class="mission-loader" id="loader">
+        <div class="star-warp" id="starWarp"></div>
+        <div class="loader-content">
+            <div id="loaderReadout" style="color: var(--primary); font-size: 0.8rem; margin-bottom: 0.5rem;">[
+                MISSION_START ]</div>
+            <div class="loader-velocity" id="velocity">0.0 km/s</div>
+            <div class="loader-progress-container">
+                <div class="loader-progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loader-phase" id="phaseLabel">Awaiting Ignition</div>
+        </div>
+    </div>
+
+    <div class="base-station-hud" id="hud">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <header class="hud-header">
+            <div class="identity-block">
+                <h1 class="glitch-text">GLITCH_BASE_STATION.v4</h1>
+                <p>Hybrid Infrastructure // Command Center</p>
+            </div>
+            <div class="system-readout">
+                LOC: <span id="loc">127.0.0.1</span><br>
+                EST_INIT: <span>ANCIENT</span><br>
+                LINK: <span>STABLE_SSH</span>
+            </div>
+            <script>
+                fetch("https://api.ipify.org?format=json")
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById("loc").textContent = data.ip;
+                    })
+                    .catch(() => {
+                        document.getElementById("loc").textContent = "unavailable";
+                    });
+            </script>
+        </header>
+
+        <main class="terminal-core">
+            <section class="status-feed">
+                <h2>GROUND_STATION</h2>
+                <div class="divider"></div>
+                <div class="diagnostic-log" id="log"></div>
+            </section>
+
+            <section class="ignition-module">
+                <div>
+                    <p
+                        style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--primary); margin-bottom: 2rem;">
+                        PRE_FLIGHT_CHECKLIST</p>
+                    <ul class="auth-check">
+                        <li class="valid"><i data-lucide="check-circle-2"></i> Hybrid_Engine_Core: READY</li>
+                        <li class="valid"><i data-lucide="check-circle-2"></i> Tensor_Lib_Infrastructure: STABLE</li>
+                        <li class="valid"><i data-lucide="check-circle-2"></i> Mechatronic_Subsystems: ACTIVE</li>
+                        <li class="valid"><i data-lucide="check-circle-2"></i> 4th_Year_Mechanical: VALIDATED</li>
+                    </ul>
+                </div>
+                <button class="ignition-btn" id="ignitionBtn" onclick="handleIgnition()">IGNITION</button>
+            </section>
+        </main>
+
+        <footer class="hud-footer">
+            <div id="clock">00:00:00</div>
+            <div class="theme-swapper">
+                SYSTEM_SKIN:
+                <select id="themeSelect">
+                    <option value="signature">SIGNATURE.SYS</option>
+                    <option value="volt">VOLT_CYBER.SKN</option>
+                    <option value="crimson">CRIMSON_PROT.SKN</option>
+                </select>
+            </div>
+            <div>STATUS: STANDBY_FOR_LAUNCH</div>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const audio = {
+            click: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'], volume: 0.2 }),
+            hover: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'], volume: 0.05 }),
+            ignite: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'], volume: 0.6 }),
+            travel: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/158/158-preview.mp3'], volume: 0.3, loop: true })
+        };
+
+        const logLines = [
+            "> INITIALIZING SYSTEM_KERNEL...",
+            "> LOADING CUSTOM_TENSOR_LIBS...",
+            "> SYNCING NLPU_RULE_ENGINE...",
+            "> CALIBRATING EMBEDDED_ROBOTICS_LINK...",
+            "> UI/UX_ENGINE_READY_FOR_FLIGHT.",
+            "> IGNITION STANDBY.",
+            "> PRESS ENTER TO LIFTOFF"
+        ];
+
+        function typeLog() {
+            if ("glitchos.theme" in localStorage) {
+                document.documentElement.setAttribute('data-theme', localStorage.getItem("glitchos.theme"));
+            }
+            const log = document.getElementById('log');
+            let lineIndex = 0;
+            function addLine() {
+                if (lineIndex < logLines.length) {
+                    const line = document.createElement('span');
+                    line.className = 'line';
+                    if (lineIndex === logLines.length - 1) line.className += ' success';
+                    line.innerText = logLines[lineIndex];
+                    log.appendChild(line);
+                    lineIndex++;
+                    setTimeout(addLine, 400);
+                }
+            }
+            addLine();
+            
+        }
+
+        function handleIgnition() {
+            audio.ignite.play();
+            const hud = document.getElementById('hud');
+            const loader = document.getElementById('loader');
+            const btn = document.getElementById('ignitionBtn');
+
+            btn.disabled = true;
+            btn.innerText = "IGNITING...";
+            hud.classList.add('vibrate');
+
+            setTimeout(() => {
+                hud.style.transform = "translateY(-120vh) scale(0.9)";
+                hud.style.opacity = "0";
+                window.location.href = 'https://berithjeshurun13.github.io/portfolio.html';
+            }, 1000);
+        }
+
+        // async function startMissionSequence() {
+        //     const bar = document.getElementById('progressBar');
+        //     const label = document.getElementById('phaseLabel');
+        //     const velocity = document.getElementById('velocity');
+        //     const readout = document.getElementById('loaderReadout');
+
+        //     label.innerText = "Phase I: Launch Ignition";
+        //     readout.innerText = "[ THRUST_VECTORING_ACTIVE ]";
+        //     await progress(0, 30, 2000, (p) => {
+        //         velocity.innerText = (p * 40).toFixed(1) + " km/s";
+        //     });
+
+        //     audio.travel.play();
+        //     label.innerText = "Phase II: Trans-Lunar Injection";
+        //     readout.innerText = "[ STARFIELD_WARP_STABLE ]";
+        //     createWarpStars();
+        //     await progress(30, 90, 4000, (p) => {
+        //         velocity.innerText = (p * 280).toFixed(1) + " km/s";
+        //     });
+
+        //     // Phase 3: Reached (90-100%)
+        //     label.innerText = "Phase III: Destination Arrival";
+        //     readout.innerText = "[ DEPRESSURIZING_HATCH ]";
+        //     await progress(90, 100, 1500, (p) => {
+        //         velocity.innerText = ((100 - p) * 20).toFixed(1) + " km/s";
+        //     });
+
+        //     // Final: Complete
+        //     label.innerText = "Mission Success";
+        //     audio.travel.fade(0.3, 0, 1000);
+        //     setTimeout(() => {
+        //         alert("Destination Reached: Ready for Main Deck Activation.");
+        //     }, 500);
+        // }
+
+        // function progress(start, end, duration, onTick) {
+        //     return new Promise(resolve => {
+        //         const startTime = Date.now();
+        //         const bar = document.getElementById('progressBar');
+
+        //         function tick() {
+        //             const elapsed = Date.now() - startTime;
+        //             const p = Math.min(elapsed / duration, 1);
+        //             const current = start + (end - start) * p;
+        //             bar.style.width = current + "%";
+        //             onTick(current);
+
+        //             if (p < 1) requestAnimationFrame(tick);
+        //             else resolve();
+        //         }
+        //         tick();
+        //     });
+        // }
+        // function createWarpStars() {
+        //     const container = document.getElementById('starWarp');
+        //     for (let i = 0; i < 100; i++) {
+        //         const star = document.createElement('div');
+        //         star.className = 'warp-particle';
+        //         star.style.left = Math.random() * 100 + "%";
+        //         star.style.top = Math.random() * 100 + "%";
+        //         container.appendChild(star);
+
+        //         star.animate([
+        //             { transform: 'scale(1) translate(0,0)', opacity: 0.5 },
+        //             { transform: `scale(4) translate(${(Math.random() - 0.5) * 1000}px, ${(Math.random() - 0.5) * 1000}px)`, opacity: 0 }
+        //         ], {
+        //             duration: 1000 + Math.random() * 2000,
+        //             iterations: Infinity
+        //         });
+        //     }
+        // }
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+        }, 1000);
+
+        document.getElementById('themeSelect').addEventListener('change', (e) => {
+            localStorage.setItem("glitchos.theme", e.target.value);
+            document.documentElement.setAttribute('data-theme', e.target.value);
+            audio.click.play();
+        });
+
+        document.querySelectorAll('button, select').forEach(el => {
+            el.addEventListener('mouseenter', () => audio.hover.play());
+        });
+
+        window.onload = typeLog;
+
+        document.addEventListener("keypress", (e) => {
+            if (e.key == 'Enter') {
+                handleIgnition();
+            }
+        })
+    </script>
+</body>
+
+</html>

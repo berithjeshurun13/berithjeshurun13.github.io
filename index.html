@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Selection // Berith Jeschurun</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link id="favicon" rel="icon" type="image/svg+xml">
+    <style>
+        :root {
+            --bg: #0B0B10;
+            --bg-sec: #141422;
+            --primary: #7A2CFF;
+            --accent: #FF2BD6;
+            --text: #F2F3FF;
+            --text-muted: #B8B6CC;
+            --border: rgba(122, 44, 255, 0.2);
+            --glass: rgba(30, 27, 46, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(122, 44, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(255, 43, 214, 0.05) 0%, transparent 40%);
+        }
+
+        .selection-deck {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            animation: systemLoad 0.8s ease-out;
+        }
+
+        @keyframes systemLoad {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        header {
+            margin-bottom: 4rem;
+        }
+
+        .brand {
+            font-family: 'JetBrains Mono';
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+        }
+
+        .status-line {
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .status-line span b { color: var(--accent); }
+
+        .choices-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .choices-container { grid-template-columns: 1fr; }
+            body { height: auto; padding: 4rem 0; }
+        }
+
+        .choice-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .choice-card:hover {
+            border-color: var(--primary);
+            background: rgba(122, 44, 255, 0.05);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(122, 44, 255, 0.1);
+        }
+
+        .choice-card i {
+            width: 48px;
+            height: 48px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            transition: 0.3s;
+        }
+
+        .choice-card:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .choice-card h2 {
+            font-family: 'JetBrains Mono';
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .choice-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .choice-card .meta {
+            margin-top: 2rem;
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            opacity: 0.6;
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.1;
+        }
+
+        footer {
+            margin-top: 4rem;
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanline"></div>
+
+    <div class="selection-deck">
+        <header>
+            <span class="brand">GLITCH_SYSTEMS // INITIALIZE</span>
+            <h1>Choose Your Interface</h1>
+            <div class="status-line">
+                <span>CORE: <b>STABLE</b></span>
+                <span>ARCH: <b>HYBRID_V4</b></span>
+                <span>SIGNAL: <b>ENCRYPTED</b></span>
+            </div>
+        </header>
+
+        <div class="choices-container">
+            <a href="./onePage.html" class="choice-card">
+                <i data-lucide="terminal"></i>
+                <h2>One Page</h2>
+                <p>A straightforward, single-page professional node. Zero navigation, high-efficiency data output. Ideal for rapid review.</p>
+                <div class="meta">EXECUTE: STRAIGHT_FORWARD</div>
+            </a>
+
+            <a href="./launch.html" class="choice-card">
+                <i data-lucide="command"></i>
+                <h2>Immersive Deck (GLITCH_OS)</h2>
+                <p>A rich, high-fidelity operating system environment. Detailed sequencing, mission logs, and interactive telemetry.</p>
+                <div class="meta">EXECUTE: LAUNCH_PAD</div>
+            </a>
+        </div>
+
+        <footer>
+            &copy; 2026 BERITH JESHURUN // HYBRID INFRASTRUCTURE ENGINEER
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="signature">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH_OS // Nav Deck</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        :root,
+        [data-theme="signature"] {
+            --primary: #7A2CFF;
+            --accent: #FF2BD6;
+            --glow: rgba(122, 44, 255, 0.4);
+            --bg: #0B0B10;
+            --bg-sec: #141422;
+            --surface: #1E1B2E;
+            --text: #F2F3FF;
+            --text-dim: #B8B6CC;
+            --border: rgba(122, 44, 255, 0.25);
+            --beam-grad: linear-gradient(to top, #FF2BD6, #7A2CFF);
+        }
+
+        [data-theme="volt"] {
+            --primary: #B5E853;
+            --accent: #2BD6FF;
+            --glow: rgba(181, 232, 83, 0.4);
+            --bg: #050805;
+            --bg-sec: #0B150B;
+            --surface: #121A12;
+            --text: #F2F3FF;
+            --text-dim: #A8B8A8;
+            --border: rgba(181, 232, 83, 0.25);
+            --beam-grad: linear-gradient(to top, #2BD6FF, #B5E853);
+        }
+
+        [data-theme="crimson"] {
+            --primary: #FF3E3E;
+            --accent: #FF9E2B;
+            --glow: rgba(255, 62, 62, 0.4);
+            --bg: #080303;
+            --bg-sec: #140505;
+            --surface: #1A0A0A;
+            --text: #FFF2F2;
+            --text-dim: #CCB6B6;
+            --border: rgba(255, 62, 62, 0.25);
+            --beam-grad: linear-gradient(to top, #FF9E2B, #FF3E3E);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(122, 44, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 43, 214, 0.05) 0%, transparent 50%);
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.15;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 4px, 3px 100%;
+            display: block;
+        }
+
+        .deck-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr 350px;
+            grid-template-rows: 70px 1fr 60px;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .top-readout {
+            grid-column: 1 / -1;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            background: rgba(11, 11, 16, 0.95);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+        }
+
+        .sys-identity {
+            font-family: 'JetBrains Mono';
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
+
+        .sys-identity span {
+            color: var(--primary);
+            font-weight: 800;
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .timeline-aside {
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            background: rgba(20, 20, 34, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .launch-path {
+            position: absolute;
+            left: 3rem;
+            bottom: 0;
+            top: 0;
+            width: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        .active-path-fill {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--beam-grad);
+            box-shadow: 0 0 15px var(--primary);
+            transition: height 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .rocket-tracker {
+            position: absolute;
+            left: 3rem;
+            bottom: 0;
+            transform: translate(-50%, 0);
+            z-index: 10;
+            transition: bottom 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            color: var(--primary);
+            filter: drop-shadow(0 0 10px var(--glow));
+            opacity: 0;
+        }
+
+        .project-milestone {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            z-index: 5;
+            transition: 0.3s;
+        }
+
+        .milestone-planet {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background: var(--bg-sec);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            transition: 0.4s;
+            z-index: 15;
+        }
+
+        .project-milestone.active .milestone-planet {
+            border-color: var(--primary);
+            color: #fff;
+            background: var(--primary);
+            box-shadow: 0 0 30px var(--glow);
+            transform: scale(1.1);
+        }
+
+        .milestone-info {
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .project-milestone.active .milestone-info {
+            color: var(--text);
+            font-weight: 800;
+        }
+
+        .mission-display {
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at center, rgba(30, 27, 46, 0.2) 0%, transparent 70%);
+        }
+
+        .project-console {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(30, 27, 46, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            display: none;
+            margin: auto 0;
+        }
+
+        .project-console.active {
+            display: block;
+            animation: consoleEnter 0.6s ease-out;
+        }
+
+        @keyframes consoleEnter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .console-header {
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+        }
+
+        .console-header h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 1;
+        }
+
+        .console-header .meta {
+            font-family: 'JetBrains Mono';
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        .visual-frame {
+            width: 100%;
+            aspect-ratio: 21/9;
+            background: #000;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tech-desc {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .dependency-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .dep-tag {
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+        }
+
+        .widget-aside {
+            border-left: 1px solid var(--border);
+            background: rgba(11, 11, 16, 0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .widget-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--border);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .widget-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .widget-pane {
+            display: none;
+        }
+
+        .widget-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .widget-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .widget-title {
+            font-size: 0.6rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .stat-row span:last-child {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .skill-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 100%;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .skill-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .terminal-container {
+            background: #050508;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .terminal-output {
+            flex: 1;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--primary);
+            overflow-y: auto;
+            line-height: 1.4;
+            scrollbar-width: thin;
+        }
+
+        .terminal-output::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .terminal-output::-webkit-scrollbar-thumb {
+            background: var(--border);
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border);
+        }
+
+        .terminal-prompt {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            margin-right: 10px;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+        }
+
+        .env-toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: var(--bg-sec);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-switch.on {
+            background: var(--primary);
+        }
+
+        .toggle-switch::after {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .toggle-switch.on::after {
+            left: 22px;
+        }
+
+        .deck-dashboard {
+            grid-column: 1 / -1;
+            border-top: 1px solid var(--border);
+            background: rgba(11, 11, 16, 0.95);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            z-index: 100;
+        }
+
+        .breadcrumbs {
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .breadcrumbs span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .dash-controls {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .control-unit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono';
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .control-unit i {
+            color: var(--primary);
+            width: 14px;
+        }
+
+        select#theme-swapper {
+            background: var(--bg-sec);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanlines" id="scanlineLayer"></div>
+
+    <div class="deck-grid">
+
+        <header class="top-readout">
+            <div class="sys-identity">HYBRID_INFRA // <span>BERITH_JESHURUN</span></div>
+            <div
+                style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-dim); display: flex; gap: 20px;">
+                <div id="uptime">UPTIME: 00:00:00</div>
+                <div>SIGNAL: <span style="color: var(--primary)">NOMINAL</span></div>
+            </div>
+        </header>
+
+        <aside class="timeline-aside">
+            <div class="launch-path">
+                <div class="active-path-fill" id="pathFill"></div>
+            </div>
+            <div class="rocket-tracker" id="rocketTracker">
+                <i data-lucide="rocket" style="width: 22px; height: 22px;"></i>
+            </div>
+            <div id="timeline-list" style="display: flex; flex-direction: column-reverse; width: 100%;">
+            </div>
+        </aside>
+
+        <main class="mission-display">
+            <div id="content-area" style="width: 100%; display: flex; justify-content: center;">
+            </div>
+        </main>
+
+        <aside class="widget-aside">
+            <div class="widget-tabs">
+                <button class="tab-btn active" onclick="switchWidget('telemetry')">TELEMETRY</button>
+                <button class="tab-btn" onclick="switchWidget('skills')">MATRIX</button>
+                <button class="tab-btn" onclick="switchWidget('terminal')">TERMINAL</button>
+            </div>
+
+            <div class="widget-content">
+                <div class="widget-pane active" id="telemetry-pane">
+                    <div class="widget-box">
+                        <div class="widget-title">Environmental_Status</div>
+                        <div class="stat-row"><span>ATMOSPHERE</span><span>94% N2</span></div>
+                        <div class="stat-row"><span>RADIATION</span><span>0.12 mSv</span></div>
+                        <div class="stat-row"><span>HULL_INTEGRITY</span><span>100%</span></div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-title">Mission_Controls</div>
+                        <div class="env-toggle-row">
+                            <span style="font-size: 0.6rem; color: var(--text-dim);">SCANLINES</span>
+                            <div class="toggle-switch on" id="scanToggle" onclick="toggleScanlines()"></div>
+                        </div>
+                        <div class="env-toggle-row">
+                            <span style="font-size: 0.6rem; color: var(--text-dim);">SYSTEM_FX</span>
+                            <div class="toggle-switch on" id="fxToggle" onclick="toggleFX()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-pane" id="skills-pane">
+                </div>
+
+                <div class="widget-pane" id="terminal-pane">
+                    <div class="widget-title">Interactive_CLI_v4</div>
+                    <div class="terminal-container">
+                        <div class="terminal-output" id="terminalLog">
+                            // BJ_STARSHIP_OS_BOOT_COMPLETE
+                            // TYPE 'help' FOR AVAILABLE COMMANDS
+                        </div>
+                        <div class="terminal-input-line">
+                            <span class="terminal-prompt">bj@os:~#</span>
+                            <input type="text" class="terminal-input" id="terminalInput" spellcheck="false"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <footer class="deck-dashboard">
+            <div class="breadcrumbs">
+                MISSION // SECTOR // <span id="current-sector">STATION</span>
+            </div>
+
+            <div class="dash-controls">
+                <div class="control-unit"><i data-lucide="shield-check"></i> ENCRYPTED</div>
+                <div class="control-unit">
+                    <i data-lucide="palette"></i>
+                    <select id="theme-swapper">
+                        <option value="signature">SIGNATURE.SYS</option>
+                        <option value="volt">VOLT_CYBER.SKN</option>
+                        <option value="crimson">CRIMSON_PROT.SKN</option>
+                    </select>
+                </div>
+                <div class="control-unit" id="clock">00:00:00</div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        let CurrentView = null;
+        let CurrentViewId = null;
+        let CurrentViewData = null;
+        let projectData = []
+
+        let config = {
+            fx: true,
+            scanlines: true
+        };
+
+        const audio = {
+            click: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'], volume: 0.15 }),
+            nav: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2579/2579-preview.mp3'], volume: 0.2 }),
+            terminal: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'], volume: 0.05 }),
+            typing: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2562/2562-preview.mp3'], volume: 0.03 })
+        };
+
+        function initTimeline() {
+            function rx() {
+                const list = document.getElementById('timeline-list');
+                list.innerHTML = projectData.map((p, index) => `
+                <div class="project-milestone" id="milestone-${index}" onclick="updateMission(${index})">
+                    <div class="milestone-planet"><i data-lucide="${p.icon}"></i></div>
+                    <div class="milestone-info">
+                        <div style="font-size: 0.5rem; opacity: 0.5;">LOG_0${index + 1}</div>
+                        <div>${p.name}</div>
+                    </div>
+                </div>
+            `).join('');
+                lucide.createIcons();
+                if ("glitchos-redirect:projects" in localStorage) {
+                    const rdr = localStorage.getItem("glitchos-redirect:projects");
+                    projectData.forEach(element => {
+                        if (element.id == rdr) {
+                            updateMission(element.ct);
+                        }
+                    });
+                } else { updateMission(0); }
+            }
+            fetch("data/projects.json")
+                .then(response => {
+                    if (!response.ok) throw new Error("Network error");
+                    return response.json();
+                })
+                .then(data => {
+                    projectData = data;
+                    rx()
+                })
+                .catch(err => {
+                    projectData = [{ id: 'knvectis', ct: 0, name: 'knvectis', sector: 'Library', icon: 'library', tech: 'Python', deps: ['RAG', 'KnowledgeEngine'], desc: 'A modular traversal and knowledge execution engine for structured object hierarchies.' }]; rx();
+                });
+        }
+
+        function updateMissionStats(params) {
+            const skillMeter = document.getElementById("skills-pane");
+            skillMeter.innerHTML = "";
+
+            params.forEach(element => {
+                const widget_box = document.createElement("div");
+                widget_box.className = "widget-box";
+
+                const widget_title = document.createElement("div");
+                widget_title.className = "widget-title";
+                widget_title.textContent = String(element.id).toUpperCase();
+                widget_box.appendChild(widget_title);
+
+                for (const [skillName, skillValue] of Object.entries(element.values)) {
+                    const stat_row = document.createElement("div");
+                    stat_row.className = "stat-row";
+
+                    const spanName = document.createElement("span");
+                    spanName.textContent = skillName.toUpperCase();
+
+                    const spanValue = document.createElement("span");
+                    spanValue.textContent = skillValue + "%";
+
+                    stat_row.appendChild(spanName);
+                    stat_row.appendChild(spanValue);
+                    widget_box.appendChild(stat_row);
+
+                    const skill_bar = document.createElement("div");
+                    skill_bar.className = "skill-bar";
+
+                    const skill_fill = document.createElement("div");
+                    skill_fill.className = "skill-fill";
+                    skill_fill.style.width = skillValue + "%";
+
+                    skill_bar.appendChild(skill_fill);
+                    widget_box.appendChild(skill_bar);
+                }
+
+                skillMeter.appendChild(widget_box);
+            });
+        }
+
+        function updateMission(index) {
+            if (config.fx) audio.click.play();
+            const project = projectData[index];
+
+            document.querySelectorAll('.project-milestone').forEach(m => m.classList.remove('active'));
+            document.getElementById(`milestone-${index}`).classList.add('active');
+            CurrentView = projectData[index].id;
+            CurrentViewId = index;
+            CurrentViewData = projectData[index];
+
+            const rocket = document.getElementById('rocketTracker');
+            const fill = document.getElementById('pathFill');
+            const milestone = document.getElementById(`milestone-${index}`);
+            const aside = document.querySelector('.timeline-aside');
+
+            const mRect = milestone.getBoundingClientRect();
+            const aRect = aside.getBoundingClientRect();
+            const bottomPos = aRect.bottom - mRect.bottom + (mRect.height / 2);
+
+            fill.style.height = `${bottomPos}px`;
+            rocket.style.opacity = "1";
+            rocket.style.bottom = `${bottomPos - 60}px`;
+
+            setTimeout(() => { rocket.style.opacity = "0"; }, 600);
+
+            document.getElementById('current-sector').innerText = project.sector;
+            document.getElementById('content-area').innerHTML = `
+                <div class="project-console active">
+                    <div class="console-header">
+                        <h2>${project.name}</h2>
+                        <div class="meta">${project.sector} // ${project.tech}</div>
+                    </div>
+                    <div class="visual-frame">
+                        <img src="https://berithjeshurun13.github.io/preview/images/${project.view}" alt="Feed" style="width:100%;height:100%;object-fit:cover;opacity:0.8;">
+                    </div>
+                    <div class="dependency-bar">
+                        ${project.deps.map(d => `<span class="dep-tag">${d}</span>`).join('')}
+                    </div>
+                    <p class="tech-desc">${project.desc}</p>
+                    <div style="display:flex;gap:15px;">
+                        <button onclick="go('${project.link_repo}')" class="action-btn" style="flex:1;padding:12px;background:var(--primary);border:none;color:white;font-family:'JetBrains Mono';font-size:0.7rem;cursor:pointer;font-weight:bold;border-radius:4px;">INITIALIZE_REPOSITORY</button>
+                        <button onclick="go('${project.link_bin}')" class="action-btn" style="flex:1;padding:12px;background:transparent;border:1px solid var(--primary);color:var(--primary);font-family:'JetBrains Mono';font-size:0.7rem;cursor:pointer;border-radius:4px;">EXTRACT_BINARY</button>
+                    </div>
+                </div>
+            `;
+            updateMissionStats(CurrentViewData.meta);
+        }
+
+        const terminalInput = document.getElementById('terminalInput');
+        const terminalOutput = document.getElementById('terminalLog');
+
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = terminalInput.value.trim().toLowerCase();
+                if (cmd) {
+                    processCommand(cmd);
+                    terminalInput.value = '';
+                }
+            } else if (config.fx) {
+                audio.typing.play();
+            }
+        });
+
+        function printToTerminal(text, color = 'var(--primary)') {
+            const line = document.createElement('div');
+            line.style.color = color;
+            line.style.marginBottom = '5px';
+            line.innerHTML = text;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        function processCommand(cmd) {
+            printToTerminal(`<span style="color:var(--accent)">bj@os:~#</span> ${cmd}`, 'var(--text)');
+
+            if (config.fx) audio.terminal.play();
+
+            const parts = cmd.split(' ');
+            const baseCmd = parts[0];
+
+            switch (baseCmd) {
+                case 'help':
+                    printToTerminal('AVAILABLE COMMANDS:');
+                    printToTerminal('  help      - List commands');
+                    printToTerminal('  ls        - List project modules');
+                    printToTerminal('  status    - Show system telemetry');
+                    printToTerminal('  clear     - Wipe terminal log');
+                    printToTerminal('  theme [v] - Switch skin (signature, volt, crimson)');
+                    printToTerminal('  about     - Identity readout');
+                    break;
+
+                case 'ls':
+                    printToTerminal('INITIALIZED MODULES:');
+                    projectData.forEach(p => printToTerminal(`  > ${p.id.toUpperCase()} [${p.sector}]`));
+                    break;
+
+                case 'status':
+                    printToTerminal('SYSTEM TELEMETRY:');
+                    printToTerminal('  - SIGNAL: STABLE');
+                    printToTerminal('  - TEMP: 242°C');
+                    printToTerminal('  - HULL: 100%');
+                    break;
+
+                case 'clear':
+                    terminalOutput.innerHTML = '// TERMINAL WIPED';
+                    break;
+
+                case 'about':
+                    printToTerminal('IDENTITY: BERITH JESCHURUN');
+                    printToTerminal('CLASS: HYBRID SYSTEMS ENGINEER');
+                    printToTerminal('PHASE: 4TH YEAR MECHANICAL');
+                    printToTerminal('CORE: PYTHON / JS / C++ / ROBOTICS');
+                    break;
+
+                case 'theme':
+                    const theme = parts[1];
+                    const themes = ['signature', 'volt', 'crimson'];
+                    if (themes.includes(theme)) {
+                        document.documentElement.setAttribute('data-theme', theme);
+                        document.getElementById('theme-swapper').value = theme;
+                        printToTerminal(`SUCCESS: THEME SWAPPED TO ${theme.toUpperCase()}`);
+                    } else {
+                        printToTerminal('ERROR: THEME NOT FOUND. USE: signature, volt, crimson', '#ff3e3e');
+                    }
+                    break;
+
+                default:
+                    printToTerminal(`COMMAND NOT RECOGNIZED: ${baseCmd}`, '#ff3e3e');
+                    printToTerminal("TYPE 'help' FOR ASSISTANCE.");
+            }
+        }
+
+        function switchWidget(tab) {
+            if (config.fx) audio.nav.play();
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.widget-pane').forEach(p => p.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`${tab}-pane`).classList.add('active');
+
+            if (tab === 'terminal') {
+                setTimeout(() => terminalInput.focus(), 100);
+            }
+        }
+
+        function toggleScanlines() {
+            config.scanlines = !config.scanlines;
+            document.getElementById('scanlineLayer').style.display = config.scanlines ? 'block' : 'none';
+            document.getElementById('scanToggle').classList.toggle('on');
+        }
+
+        function toggleFX() {
+            config.fx = !config.fx;
+            document.getElementById('fxToggle').classList.toggle('on');
+        }
+
+        let startTime = Date.now();
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+            let diff = Math.floor((Date.now() - startTime) / 1000);
+            let h = Math.floor(diff / 3600).toString().padStart(2, '0');
+            let m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+            let s = (diff % 60).toString().padStart(2, '0');
+            document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
+        }, 1000);
+
+        document.getElementById('theme-swapper').addEventListener('change', (e) => {
+            document.documentElement.setAttribute('data-theme', e.target.value);
+            if (config.fx) audio.nav.play();
+        });
+
+        window.onload = initTimeline;
+
+        function go(link) {
+            window.location.href = link;
+            console.log(link);
+        }
+
+        function navArr(mode) {
+            for (let index = 0; index < projectData.length; index++) {
+                const element = projectData[index];
+                if (element.id == CurrentView) {
+                    if (mode == "up") {
+                        updateMission(projectData[index + 1].id);
+                        break;
+                    } else {
+                        updateMission(projectData[index - 1].id);
+
+                    }
+                }
+            }
+        }
+
+        document.addEventListener("keypress", (e) => {
+            if (e.key == 'ArrowUp') {
+                navArr("up");
+            } else if (e.key == "ArrowDown") {
+                navArr("down")
+            }
+        })
+    </script>
+</body>
+
+</html>

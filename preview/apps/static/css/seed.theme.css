@@ -1,0 +1,7 @@
+:root {
+    --body-bg : #161616;
+    --body-bg-2 : #1e1e1e;
+    --primary-color : #03f484;
+    --secondary-color : #69a854;
+}
+body {background-color: var(--body-bg);color: var(--primary-color);overflow: hidden;}

@@ -1,0 +1,315 @@
+[
+    {
+        "id": "knvectis",
+        "ct": 0,
+        "name": "knvectis",
+        "sector": "Library",
+        "icon": "library",
+        "tech": "Python",
+        "view": "knvectis.png",
+        "deps": [
+            "RAG",
+            "Knowledge Engine",
+            "Library"
+        ],
+        "desc": "A modular traversal and knowledge execution engine for structured object hierarchies.",
+        "link_repo": "https://github.com/berithjeshurun/knvectis",
+        "link_bin": "https://github.com/berithjeshurun/knvectis/releases/tag/0.1.0",
+        "meta": [
+            {
+                "id": "domain",
+                "values": {
+                    "Knowledge Graph": 90,
+                    "Reasoning Engine": 85,
+                    "Structural Traversal": 95,
+                    "RAG Support": 70,
+                    "Vector Infrastructure": 75
+                }
+            },
+            {
+                "id": "architecture",
+                "values": {
+                    "Hierarchical": 95,
+                    "Graph-Based": 85,
+                    "Modular Engine": 90,
+                    "Resolver-Driven": 92
+                }
+            },
+            {
+                "id": "capabilities",
+                "values": {
+                    "Predicate Matching": 95,
+                    "Custom Traversal Modes": 90,
+                    "Contextual Scoring": 80,
+                    "Extensible Object Model": 93
+                }
+            },
+            {
+                "id": "languages",
+                "values": {
+                    "Python": 100
+                }
+            },
+            {
+                "id": "maturity",
+                "values": {
+                    "Prototype": 85
+                }
+            }
+        ]
+    },
+    {
+        "id": "pyslyphie",
+        "ct": 1,
+        "name": "PySlyphie",
+        "sector": "Library",
+        "icon": "circuit-board",
+        "tech": "Python",
+        "view": "pyslyphie.png",
+        "deps": [
+            "LLM",
+            "Modular Tools",
+            "Web APIs",
+            "Async Jobs"
+        ],
+        "desc": "A next-generation, tool-augmented AI framework that allows LLMs to interact dynamically with modules, execute asynchronous tasks, fetch and clean web content, access cameras, and perform advanced network and string operations.",
+        "link_repo": "https://github.com/berithjeshurun/pyslyphie",
+        "link_bin": "https://github.com/berithjeshurun/pyslyphie/releases/tag/0.1.0",
+        "meta": [
+            {
+                "id": "domain",
+                "values": {
+                    "Tool-Augmented AI": 95,
+                    "Web Knowledge Access": 90,
+                    "Network Utilities": 85,
+                    "Camera Integration": 80,
+                    "String Utilities": 80
+                }
+            },
+            {
+                "id": "architecture",
+                "values": {
+                    "Modular Engine": 95,
+                    "Asynchronous Jobs": 90,
+                    "Plugin System": 92,
+                    "LLM Integration": 95,
+                    "Context Updating": 88
+                }
+            },
+            {
+                "id": "capabilities",
+                "values": {
+                    "Dynamic Command Execution": 95,
+                    "Web Scraping & Cleaning": 90,
+                    "Wikipedia & DDG Access": 88,
+                    "Job Tracking & Async Handling": 92,
+                    "Extensible Module Support": 95
+                }
+            },
+            {
+                "id": "languages",
+                "values": {
+                    "Python": 100
+                }
+            },
+            {
+                "id": "maturity",
+                "values": {
+                    "Prototype": 85
+                }
+            }
+        ]
+    },
+    {
+        "id": "grace_ui",
+        "ct": 2,
+        "name": "GRACE",
+        "sector": "Framework",
+        "icon": "monitor",
+        "tech": "Python",
+        "view": "grace_ui.png",
+        "deps": [
+            "Tkinter",
+            "PIL (Pillow)",
+            "Pygame",
+            "Requests",
+            "Keyboard",
+            "Threading"
+        ],
+        "desc": "An advanced Tkinter-based UI framework developed in 2019, featuring multi-layered frames, animated server signals, tile-based app navigation, dynamic image and font handling, threaded network monitoring, and a command-line interface with paste support.",
+        "link_repo": "https://github.com/berithjeshurun/grace",
+        "link_bin": "https://github.com/berithjeshurun/grace/releases/tag/0.1.0",
+        "meta": [
+            {
+                "id": "domain",
+                "values": {
+                    "Desktop UI Framework": 95,
+                    "Animated Signals": 90,
+                    "Tile-Based Navigation": 92,
+                    "Command-Line Integration": 88,
+                    "Dynamic Asset Loading": 85
+                }
+            },
+            {
+                "id": "architecture",
+                "values": {
+                    "Multi-Frame Layout": 95,
+                    "Threaded Network Check": 90,
+                    "Tkinter Event Loop": 95,
+                    "Recursive Animations": 92,
+                    "Tile Toggle System": 88
+                }
+            },
+            {
+                "id": "capabilities",
+                "values": {
+                    "Command Execution": 95,
+                    "Paste Support": 90,
+                    "Server Signal Monitoring": 92,
+                    "Dynamic Image Animations": 95,
+                    "Tile Navigation": 90
+                }
+            },
+            {
+                "id": "languages",
+                "values": {
+                    "Python": 100
+                }
+            },
+            {
+                "id": "maturity",
+                "values": {
+                    "Prototype": 85
+                }
+            }
+        ]
+    },
+    {
+        "id": "pyseed_dtypes",
+        "ct": 3,
+        "name": "pyseed_dtypes",
+        "sector": "Library",
+        "icon": "layers",
+        "tech": "Python",
+        "view": "pyseed_dtypes.png",
+        "deps": [
+            "NumPy",
+            "Pillow",
+            "SymPy",
+            "Matplotlib",
+            "Pint",
+            "SciPy"
+        ],
+        "desc": "A rigorous semantic type system bridging raw tensors with domain-specific logic. It features immutable data structures for quantum mechanics, biblical NLP, audio signal processing, and geometry, utilizing strict type enforcement and symbolic integration.",
+        "link_repo": "https://github.com/berithjeshurun/pyseed_dtypes",
+        "link_bin": "https://github.com/berithjeshurun/pyseed_dtypes/releases/tag/1.0.0",
+        "meta": [
+            {
+                "id": "domain",
+                "values": {
+                    "Scientific Computing": 98,
+                    "Computational Theology": 95,
+                    "Quantum Physics": 92,
+                    "Audio Processing": 90,
+                    "Computer Vision": 88
+                }
+            },
+            {
+                "id": "architecture",
+                "values": {
+                    "Immutable Tensors": 100,
+                    "NumPy Wrapper": 98,
+                    "Symbolic Integration": 92,
+                    "Strict Typing": 95,
+                    "Sparse Representation": 85
+                }
+            },
+            {
+                "id": "capabilities",
+                "values": {
+                    "Biblical Syntax Trees": 98,
+                    "Unit-Aware Tensors": 95,
+                    "Quantum State Handling": 92,
+                    "Autodiff (GradTensor)": 88,
+                    "Spectrogram Analysis": 90
+                }
+            },
+            {
+                "id": "languages",
+                "values": {
+                    "Python": 100
+                }
+            },
+            {
+                "id": "maturity",
+                "values": {
+                    "Stable": 90
+                }
+            }
+        ]
+    },
+    {
+        "id": "cultforge",
+        "ct": 4,
+        "name": "CultForge",
+        "sector": "Gaming / Utility",
+        "icon": "gaming",
+        "tech": "Python",
+        "view": "cultforge_main.png",
+        "deps": [
+            "PySide6",
+            "Requests",
+            "Minecraft-Launcher-Lib",
+            "Threading",
+            "JSON-Config",
+            "Cryptography"
+        ],
+        "desc": "A community-focused Minecraft launcher featuring zero-manual mod installation, automatic server-syncing, and an invite-only authentication system. Includes an integrated marketplace for conflict-free mods, shaders, and resource packs with a built-in global chat and leaderboard system.",
+        "link_repo": "https://cultfg.github.io/",
+        "link_bin": "https://github.com/berithjeshurun/cultforge/releases",
+        "meta": [
+            {
+                "id": "domain",
+                "values": {
+                    "Game Virtualization": 95,
+                    "Community Management": 92,
+                    "Automated Patching": 98,
+                    "Secure Authentication": 90,
+                    "Social Integration": 85
+                }
+            },
+            {
+                "id": "architecture",
+                "values": {
+                    "Auto-Sync Engine": 100,
+                    "Invite-Code Logic": 95,
+                    "Dependency Resolution": 92,
+                    "Threaded Downloads": 88,
+                    "Shader GUI Editor": 85
+                }
+            },
+            {
+                "id": "capabilities",
+                "values": {
+                    "Zero-Manual Install": 100,
+                    "Conflict-Free Library": 95,
+                    "Global Chat System": 90,
+                    "Server Build Protection": 92,
+                    "Hall of Fame Tracking": 80
+                }
+            },
+            {
+                "id": "languages",
+                "values": {
+                    "Python": 100
+                }
+            },
+            {
+                "id": "maturity",
+                "values": {
+                    "Active Development": 85
+                }
+            }
+        ]
+    }
+]
