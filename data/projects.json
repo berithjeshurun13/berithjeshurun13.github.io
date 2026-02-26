@@ -13,8 +13,8 @@
             "Library"
         ],
         "desc": "A modular traversal and knowledge execution engine for structured object hierarchies.",
-        "link_repo": "https://github.com/berithjeshurun/knvectis",
-        "link_bin": "https://github.com/berithjeshurun/knvectis/releases/tag/0.1.0",
+        "link_repo": "https://github.com/berithjeshurun13/knvectis",
+        "link_bin": "https://github.com/berithjeshurun13/knvectis/releases/tag/0.1.0",
         "meta": [
             {
                 "id": "domain",
@@ -73,8 +73,8 @@
             "Async Jobs"
         ],
         "desc": "A next-generation, tool-augmented AI framework that allows LLMs to interact dynamically with modules, execute asynchronous tasks, fetch and clean web content, access cameras, and perform advanced network and string operations.",
-        "link_repo": "https://github.com/berithjeshurun/pyslyphie",
-        "link_bin": "https://github.com/berithjeshurun/pyslyphie/releases/tag/0.1.0",
+        "link_repo": "https://github.com/berithjeshurun13/pyslyphie",
+        "link_bin": "https://github.com/berithjeshurun13/pyslyphie/releases/tag/0.1.0",
         "meta": [
             {
                 "id": "domain",
@@ -137,8 +137,8 @@
             "Threading"
         ],
         "desc": "An advanced Tkinter-based UI framework developed in 2019, featuring multi-layered frames, animated server signals, tile-based app navigation, dynamic image and font handling, threaded network monitoring, and a command-line interface with paste support.",
-        "link_repo": "https://github.com/berithjeshurun/grace",
-        "link_bin": "https://github.com/berithjeshurun/grace/releases/tag/0.1.0",
+        "link_repo": "https://github.com/berithjeshurun13/grace",
+        "link_bin": "https://github.com/berithjeshurun13/grace/releases/tag/0.1.0",
         "meta": [
             {
                 "id": "domain",
@@ -201,8 +201,8 @@
             "SciPy"
         ],
         "desc": "A rigorous semantic type system bridging raw tensors with domain-specific logic. It features immutable data structures for quantum mechanics, biblical NLP, audio signal processing, and geometry, utilizing strict type enforcement and symbolic integration.",
-        "link_repo": "https://github.com/berithjeshurun/pyseed_dtypes",
-        "link_bin": "https://github.com/berithjeshurun/pyseed_dtypes/releases/tag/1.0.0",
+        "link_repo": "https://github.com/berithjeshurun13/pyseed_dtypes",
+        "link_bin": "https://github.com/berithjeshurun13/pyseed_dtypes/releases/tag/1.0.0",
         "meta": [
             {
                 "id": "domain",
@@ -266,7 +266,7 @@
         ],
         "desc": "A community-focused Minecraft launcher featuring zero-manual mod installation, automatic server-syncing, and an invite-only authentication system. Includes an integrated marketplace for conflict-free mods, shaders, and resource packs with a built-in global chat and leaderboard system.",
         "link_repo": "https://cultfg.github.io/",
-        "link_bin": "https://github.com/berithjeshurun/cultforge/releases",
+        "link_bin": "https://github.com/berithjeshurun13/cultforge/releases",
         "meta": [
             {
                 "id": "domain",
